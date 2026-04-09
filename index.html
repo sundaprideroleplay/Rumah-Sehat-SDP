@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUMAH SEHAT SUNDAPRIDE</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        :root { 
+            --primary-emerald: #064e3b;
+            --secondary-navy: #0f172a;
+            --accent-gold: #d97706;
+            --light-gold: #f59e0b;
+            --soft-bg: #f8fafc;
+        }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: var(--soft-bg); 
+            color: #334155;
+            scroll-behavior: smooth;
+        }
+
+        .glass-nav { 
+            background: rgba(255, 255, 255, 0.9); 
+            backdrop-filter: blur(12px); 
+            border-bottom: 4px solid var(--accent-gold); 
+        }
+
+        .hero-section { 
+            background: linear-gradient(rgba(6, 78, 59, 0.85), rgba(15, 23, 42, 0.9)), 
+                        url('BACKGROUND RS.png'); 
+            background-size: cover; 
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .card-premium { 
+            background: white; 
+            border-radius: 24px; 
+            border: 1px solid #e2e8f0; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .sidebar-rss { 
+            width: 280px; 
+            background: var(--secondary-navy); 
+            color: white; 
+            position: fixed; 
+            height: 100vh; 
+            z-index: 60;
+        }
+
+        .nav-link { 
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            padding: 14px 24px; 
+            color: #94a3b8; 
+            cursor: pointer; 
+            transition: 0.3s;
+            font-weight: 600;
+            border-right: 4px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active { 
+            background: rgba(217, 119, 6, 0.1); 
+            color: var(--light-gold); 
+            border-right-color: var(--light-gold);
+        }
+
+        .content-section { display: none; opacity: 0; }
+        .content-section.active { display: block; animation: fadeIn 0.5s forwards; }
+
+        @keyframes fadeIn { 
+            from { opacity: 0; transform: translateY(10px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+
+        .form-group { position: relative; margin-bottom: 1.5rem; }
+        .form-input {
+            width: 100%; padding: 14px 16px 14px 45px; background: #f8fafc;
+            border: 2px solid #e2e8f0; border-radius: 16px; outline: none; transition: 0.3s;
+            font-weight: 600; color: #1e293b;
+        }
+        .form-input:focus { border-color: var(--accent-gold); background: white; box-shadow: 0 10px 15px -3px rgba(217, 119, 6, 0.1); }
+        .form-icon { position: absolute; left: 18px; top: 18px; color: #94a3b8; transition: 0.3s; }
+        .form-input:focus + .form-icon { color: var(--accent-gold); }
+
+        .btn-primary {
+            background: var(--primary-emerald);
+            color: white;
+            padding: 14px 28px;
+            border-radius: 16px;
+            font-weight: 800;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .btn-primary:hover { background: var(--accent-gold); transform: translateY(-3px); box-shadow: 0 15px 30px -5px rgba(217, 119, 6, 0.3); }
+
+        .rule-card {
+            border-radius: 20px;
+            padding: 40px 30px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            transition: 0.3s;
+        }
+        .rule-number {
+            width: 50px; height: 50px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 800; font-size: 1.2rem;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LANDING PAGE -->
+    <div id="landing-page">
+        <nav class="glass-nav fixed w-full z-50 px-6 md:px-16 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <img src="logo rumah sehat sunda.png" alt="Logo" class="w-14 h-14 object-contain">
+                <div class="leading-none">
+                    <span class="block font-[800] text-2xl tracking-tighter text-emerald-900 uppercase italic">RUMAH SEHAT</span>
+                    <span class="text-[10px] font-bold text-amber-700 tracking-[0.3em] uppercase">SUNDAPRIDE ROLEPLAY</span>
+                </div>
+            </div>
+            <div class="hidden md:flex gap-10 font-bold text-xs items-center text-emerald-900 uppercase tracking-widest">
+                <a href="#rules" class="hover:text-amber-600 transition">Aturan Pasien</a>
+                <a href="#lowongan" class="hover:text-amber-600 transition">Karir Medis</a>
+                <button onclick="toggleModal('login-modal')" class="bg-emerald-900 text-white px-8 py-3 rounded-full hover:bg-amber-600 transition-all shadow-lg">STAFF LOGIN</button>
+            </div>
+        </nav>
+
+        <section class="hero-section min-h-screen flex items-center px-6 md:px-24 text-white">
+            <div class="max-w-4xl">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-amber-400 text-[10px] font-black uppercase tracking-[0.2em] mb-8">
+                    <i class="fas fa-star"></i> Pelayanan Medis Warga SUNDA PRIDE
+                </div>
+                <h1 class="text-6xl md:text-8xl font-[800] italic mb-8 leading-tight">Melayani Dengan <br><span class="text-amber-500">Sepenuh Hati.</span></h1>
+                <p class="text-slate-200 text-xl mb-12 max-w-2xl font-light leading-relaxed">Pusat kesehatan terpadu yang mengedepankan profesionalisme dan etika medis tinggi bagi seluruh warga Sunda Pride.</p>
+                <div class="flex flex-wrap gap-6">
+                    <a href="#lowongan" class="bg-amber-600 text-white px-12 py-5 rounded-2xl font-[800] shadow-2xl hover:bg-white hover:text-emerald-900 transition-all transform hover:-translate-y-1">DAFTAR SEKARANG</a>
+                    <a href="#rules" class="px-12 py-5 rounded-2xl font-[800] border-2 border-white/30 backdrop-blur-sm hover:bg-white/10 transition-all">ATURAN PASIEN</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- RULES -->
+        <section id="rules" class="py-32 px-6 md:px-24 bg-white">
+            <div class="max-w-7xl mx-auto">
+                <div class="mb-16">
+                    <h2 class="text-5xl font-[900] italic uppercase text-emerald-950">ATURAN & <span class="text-amber-600">PROSEDUR</span></h2>
+                    <p class="text-slate-500 mt-4 max-w-md font-medium leading-relaxed">Demi kenyamanan bersama, seluruh pengunjung wajib mengikuti regulasi medis yang berlaku.</p>
+                </div>
+                <div class="grid md:grid-cols-4 gap-6">
+                    <div class="rule-card hover:border-emerald-900">
+                        <div class="rule-number bg-emerald-50 text-emerald-900">01</div>
+                        <h4 class="font-bold text-lg mb-4 uppercase tracking-tighter text-emerald-950">Etika Mengantre</h4>
+                        <p class="text-sm text-slate-500 leading-relaxed font-medium">Pasien wajib mendaftar di resepsionis dan dilarang masuk ke ruang periksa tanpa dipanggil oleh staff medis.</p>
+                    </div>
+                    <div class="rule-card hover:border-amber-600">
+                        <div class="rule-number bg-amber-50 text-amber-600">02</div>
+                        <h4 class="font-bold text-lg mb-4 uppercase tracking-tighter text-emerald-950">Zona Senyap</h4>
+                        <p class="text-sm text-slate-500 leading-relaxed font-medium">Dilarang membuat keributan, berteriak, atau menyalakan musik dengan volume tinggi di area Rumah Sehat.</p>
+                    </div>
+                    <div class="rule-card hover:border-emerald-900">
+                        <div class="rule-number bg-emerald-50 text-emerald-900">03</div>
+                        <h4 class="font-bold text-lg mb-4 uppercase tracking-tighter text-emerald-950">Senjata</h4>
+                        <p class="text-sm text-slate-500 leading-relaxed font-medium">Dilarang membawa senjata dalam bentuk apapun. Keamanan RS berhak melakukan penggeledahan di tempat.</p>
+                    </div>
+                    <div class="rule-card hover:border-amber-600">
+                        <div class="rule-number bg-amber-50 text-amber-600">04</div>
+                        <h4 class="font-bold text-lg mb-4 uppercase tracking-tighter text-emerald-950">Administrasi</h4>
+                        <p class="text-sm text-slate-500 leading-relaxed font-medium">Setiap biaya pengobatan wajib dilunasi di tempat. Kegagalan pembayaran akan diproses melalui hukum yang berlaku.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VACANCY -->
+        <section id="lowongan" class="py-32 px-6 md:px-24 bg-slate-50">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-20">
+                    <h2 class="text-5xl font-[900] italic text-emerald-950 uppercase">Karir & Peluang</h2>
+                    <div class="w-24 h-1.5 bg-amber-600 mx-auto mt-6"></div>
+                </div>
+                <div id="vacancy-container" class="grid md:grid-cols-3 gap-10"></div>
+                <div id="vacancy-closed" class="hidden text-center py-24 bg-white rounded-[3rem] border-4 border-dashed border-slate-200">
+                    <i class="fas fa-door-closed text-6xl text-slate-200 mb-6"></i>
+                    <h4 class="text-3xl font-[900] text-slate-400 uppercase italic">Rekrutmen Ditutup</h4>
+                    <p class="text-slate-400 mt-2 font-semibold italic text-lg">Pantau terus informasi di Discord Resmi Sundapride</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- ADMIN PANEL -->
+    <div id="admin-panel" class="hidden flex min-h-screen">
+        <aside class="sidebar-rss flex flex-col">
+            <div class="p-8 text-center border-b border-white/5 mb-6">
+                <img src="logo rumah sehat sunda.png" class="w-20 mx-auto mb-4">
+                <p class="text-[10px] font-black text-amber-500 tracking-[0.4em] uppercase">MANAGEMENT</p>
+            </div>
+            <nav class="flex-1 px-4 space-y-2">
+                <div onclick="showSection('adm-dash', this)" class="nav-link active"><i class="fas fa-chart-line w-5"></i> Dashboard</div>
+                <div onclick="showSection('adm-rekening', this)" class="nav-link"><i class="fas fa-university w-5"></i> Kas & Penarikan</div>
+                <div onclick="showSection('adm-logs', this)" class="nav-link"><i class="fas fa-history w-5"></i> Log Transaksi</div>
+                <div onclick="showSection('adm-karyawan', this)" class="nav-link"><i class="fas fa-users-cog w-5"></i> Manajemen Staff</div>
+                <div onclick="showSection('adm-pelamar', this)" class="nav-link"><i class="fas fa-envelope-open-text w-5"></i> Pelamar <span id="badge-app" class="hidden bg-red-600 text-white text-[8px] px-2 py-0.5 rounded-full ml-auto">0</span></div>
+                <div onclick="showSection('adm-config', this)" class="nav-link"><i class="fas fa-cog w-5"></i> Pengaturan</div>
+            </nav>
+            <div class="p-6">
+                <button onclick="location.reload()" class="w-full py-4 bg-red-500/10 text-red-500 rounded-2xl font-black text-xs hover:bg-red-500 hover:text-white transition-all tracking-widest uppercase italic"><i class="fas fa-power-off mr-2"></i> Logout</button>
+            </div>
+        </aside>
+
+        <main class="flex-1 ml-[280px] p-12">
+            <!-- DASHBOARD -->
+            <section id="adm-dash" class="content-section active">
+                <h2 class="text-3xl font-[900] uppercase text-emerald-950 mb-8 italic">Ringkasan <span class="text-amber-600">Operasional</span></h2>
+                <div class="grid grid-cols-4 gap-8 mb-12">
+                    <div class="card-premium p-8 border-l-8 border-emerald-600">
+                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Total Saldo</p>
+                        <h3 id="dash-total" class="text-2xl font-[900] text-emerald-950">Rp 0</h3>
+                    </div>
+                    <div class="card-premium p-8 border-l-8 border-amber-500">
+                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Karyawan Aktif</p>
+                        <h3 id="dash-staff" class="text-3xl font-[900] text-emerald-950">0</h3>
+                    </div>
+                    <div class="card-premium p-8 border-l-8 border-blue-500">
+                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Total Transaksi</p>
+                        <h3 id="dash-inv" class="text-3xl font-[900] text-emerald-950">0</h3>
+                    </div>
+                    <div class="card-premium p-8 border-l-8 border-red-500">
+                        <p class="text-[10px] font-black text-slate-400 uppercase mb-2">Status Rekrutmen</p>
+                        <h3 id="dash-vacancy" class="text-2xl font-[900]">OPEN</h3>
+                    </div>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-10">
+                    <div class="card-premium p-10 bg-white">
+                        <h3 class="font-[900] mb-8 text-emerald-950 uppercase text-lg italic"><i class="fas fa-award text-amber-500 mr-2"></i> Leaderboard Poin</h3>
+                        <div id="leaderboard-list" class="space-y-4"></div>
+                    </div>
+                    <div class="card-premium p-10 bg-white">
+                        <h3 class="font-[900] mb-8 text-emerald-950 uppercase text-lg italic"><i class="fas fa-bolt text-amber-500 mr-2"></i> Aktivitas Terakhir</h3>
+                        <div id="short-logs" class="space-y-3"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- KAS -->
+            <section id="adm-rekening" class="content-section">
+                <h2 class="text-3xl font-[900] uppercase text-emerald-950 mb-10 italic">Manajemen <span class="text-amber-600">Arus Kas</span></h2>
+                <div class="grid grid-cols-3 gap-8 mb-12">
+                    <div class="card-premium p-8 bg-emerald-950 text-white border-none shadow-2xl">
+                        <div class="flex justify-between items-start mb-4">
+                            <p class="text-[10px] font-black text-emerald-400 uppercase tracking-widest">Buku Operasional (55%)</p>
+                            <button onclick="promptWithdraw('opr')" class="px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-[10px] font-black uppercase">TARIK</button>
+                        </div>
+                        <h4 id="acc-opr" class="text-4xl font-[900]">Rp 0</h4>
+                    </div>
+                    <div class="card-premium p-8 bg-amber-700 text-white border-none shadow-2xl">
+                        <div class="flex justify-between items-start mb-4">
+                            <p class="text-[10px] font-black text-amber-300 uppercase tracking-widest">Buku Profit (40%)</p>
+                            <button onclick="promptWithdraw('pro')" class="px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-[10px] font-black uppercase">TARIK</button>
+                        </div>
+                        <h4 id="acc-pro" class="text-4xl font-[900]">Rp 0</h4>
+                    </div>
+                    <div class="card-premium p-8 bg-slate-800 text-white border-none shadow-2xl">
+                        <div class="flex justify-between items-start mb-4">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Pajak Negara (5%)</p>
+                            <button onclick="promptWithdraw('tax')" class="px-3 py-1 bg-white/10 hover:bg-white/20 rounded-lg text-[10px] font-black uppercase">TARIK</button>
+                        </div>
+                        <h4 id="acc-tax" class="text-4xl font-[900]">Rp 0</h4>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div class="card-premium p-10">
+                        <h3 class="font-[900] mb-8 text-emerald-950 uppercase text-sm italic">Input Pemasukan Medis</h3>
+                        <div class="space-y-5">
+                            <select id="inv-staff" class="form-input" style="padding-left: 16px;"></select>
+                            <input type="number" id="inv-amount" class="form-input" placeholder="Total Biaya Rp" style="padding-left: 16px;">
+                            <button onclick="processInvoice()" class="btn-primary w-full">Submit Transaksi</button>
+                        </div>
+                    </div>
+                    <div class="card-premium p-10">
+                        <h3 class="font-[900] mb-8 text-amber-800 uppercase text-sm italic">Donasi / Manual</h3>
+                        <div class="space-y-5">
+                            <input type="text" id="manual-desc" class="form-input" placeholder="Keterangan" style="padding-left: 16px;">
+                            <input type="number" id="manual-amount" class="form-input" placeholder="Nominal Rp" style="padding-left: 16px;">
+                            <button onclick="processManualEntry()" class="bg-amber-600 text-white w-full py-4 rounded-2xl font-black">Tambah Saldo</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- LOGS -->
+            <section id="adm-logs" class="content-section">
+                <h2 class="text-3xl font-[900] uppercase text-emerald-950 mb-10 italic">Log <span class="text-amber-600">Transaksi</span></h2>
+                <div class="card-premium overflow-hidden">
+                    <table class="w-full text-left">
+                        <thead class="bg-slate-50 text-[10px] font-black uppercase text-slate-400">
+                            <tr><th class="p-6">Waktu</th><th class="p-6">Keterangan</th><th class="p-6">Nominal</th><th class="p-6 text-center">Aksi</th></tr>
+                        </thead>
+                        <tbody id="log-table-body" class="text-sm font-semibold"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- STAFF -->
+            <section id="adm-karyawan" class="content-section">
+                <div class="flex justify-between items-center mb-10">
+                    <h2 class="text-3xl font-[900] uppercase text-emerald-950 italic">Database <span class="text-amber-600">Karyawan</span></h2>
+                    <button onclick="openStaffModal()" class="btn-primary shadow-xl">+ Personel Baru</button>
+                </div>
+                <div class="card-premium overflow-hidden">
+                    <table class="w-full text-left">
+                        <thead class="bg-emerald-950 text-white text-[10px] uppercase font-black">
+                            <tr><th class="p-6">Nama</th><th class="p-6 text-center">Poin</th><th class="p-6">Status</th><th class="p-6 text-right">Kelola</th></tr>
+                        </thead>
+                        <tbody id="staff-table-body" class="font-bold text-sm"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- APPLICANTS -->
+            <section id="adm-pelamar" class="content-section">
+                <h2 class="text-3xl font-[900] uppercase text-emerald-950 mb-10 italic">Berkas <span class="text-amber-600">Pelamar</span></h2>
+                <div id="applicant-list" class="grid gap-6"></div>
+            </section>
+
+            <!-- CONFIG -->
+            <section id="adm-config" class="content-section">
+                <h2 class="text-3xl font-[900] uppercase text-emerald-950 mb-10 italic">Sistem <span class="text-amber-600">Konfigurasi</span></h2>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div id="container-vacancy" class="card-premium p-10 text-center">
+                        <h3 class="font-[900] text-xl mb-6">Status Rekrutmen</h3>
+                        <button id="btn-toggle-vacancy" onclick="toggleVacancy()" class="w-full py-4 rounded-2xl font-black text-white shadow-lg transition-all active:scale-95 uppercase"></button>
+                    </div>
+                    <div class="card-premium p-10 bg-red-50 border-red-200 text-center">
+                        <h3 class="font-[900] text-xl mb-6 text-red-950">Pembersihan Saldo</h3>
+                        <p class="text-xs text-red-400 mb-4">*Data Karyawan & Pelamar Tidak Terhapus</p>
+                        <button onclick="resetFinances()" class="w-full py-4 bg-red-600 hover:bg-red-700 text-white rounded-2xl font-black uppercase">RESET KEUANGAN</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+   <!-- LOGIN MODAL (MODEL LAMA) -->
+    <div id="login-modal" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
+        <div class="bg-white p-8 rounded-lg w-full max-w-sm shadow-2xl">
+            <div class="text-center mb-6">
+                <img src="logo rumah sehat sunda.png" class="w-16 mx-auto mb-4">
+                <h2 class="text-xl font-bold text-gray-800 uppercase tracking-tight">Staff Login</h2>
+                <div class="h-1 w-12 bg-emerald-600 mx-auto mt-2"></div>
+            </div>
+            
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-gray-400 uppercase mb-1">Passcode</label>
+                    <input type="password" id="log-pass" placeholder="Masukkan Password" 
+                        class="w-full px-4 py-3 bg-gray-100 border border-gray-200 rounded focus:outline-none focus:border-emerald-600 font-mono text-center">
+                </div>
+                
+                <button onclick="handleLogin()" 
+                    class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3 rounded transition duration-200 uppercase text-sm tracking-widest">
+                    Masuk Sistem
+                </button>
+                
+                <button onclick="toggleModal('login-modal')" 
+                    class="w-full text-gray-400 text-[10px] font-bold uppercase hover:text-red-500 transition">
+                    Kembali ke Beranda
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="apply-modal" class="hidden fixed inset-0 bg-emerald-950/95 z-[100] flex items-center justify-center p-6 backdrop-blur-xl">
+        <div class="bg-white rounded-[3rem] w-full max-w-4xl flex flex-col md:flex-row overflow-hidden shadow-2xl">
+            <div class="md:w-1/3 bg-emerald-900 p-12 text-white">
+                <img src="logo rumah sehat sunda.png" class="w-20 mb-8">
+                <h3 class="text-3xl font-[900] italic leading-tight mb-4 uppercase text-amber-500">Karier Medis Sundapride</h3>
+                <p class="text-emerald-400 text-sm font-semibold">Gunakan Identitas In Character (IC).</p>
+            </div>
+            <div class="md:w-2/3 p-12 bg-white relative">
+                <button onclick="toggleModal('apply-modal')" class="absolute top-8 right-8 text-slate-300 hover:text-red-500 transition text-2xl"><i class="fas fa-times"></i></button>
+                <h2 class="text-2xl font-[900] text-emerald-950 uppercase mb-8 italic">Formulir Rekrutmen</h2>
+                <form id="form-pendaftaran" class="space-y-4">
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div class="form-group"><input type="text" id="app-nama" class="form-input" placeholder="Nama IC" required><i class="fas fa-user form-icon"></i></div>
+                        <div class="form-group"><input type="text" id="app-discord" class="form-input" placeholder="ID Discord" required><i class="fab fa-discord form-icon"></i></div>
+                    </div>
+                    <div class="form-group">
+                        <select id="app-posisi" class="form-input" style="padding-left: 45px;">
+                            <option value="Dokter Spesialis">Dokter Spesialis</option>
+                            <option value="Dokter Umum">Dokter Umum</option>
+                            <option value="Perawat/EMS">Perawat/EMS</option>
+                        </select>
+                        <i class="fas fa-stethoscope form-icon"></i>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="app-alasan" class="form-input min-h-[100px] pt-4" placeholder="Motivasi singkat..."></textarea>
+                        <i class="fas fa-pen-nib form-icon"></i>
+                    </div>
+                    <button type="submit" class="btn-primary w-full py-5 text-lg">KIRIM LAMARAN <i class="fas fa-paper-plane ml-2"></i></button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="staff-modal" class="hidden fixed inset-0 bg-slate-900/90 z-[100] flex items-center justify-center p-6">
+        <div class="bg-white p-10 rounded-[2.5rem] w-full max-w-md">
+            <h3 id="staff-modal-title" class="font-[900] text-xl mb-8 uppercase text-emerald-950">Data Staff</h3>
+            <div class="space-y-4">
+                <input type="hidden" id="edit-index" value="-1">
+                <input type="text" id="stf-nama" class="form-input" placeholder="Nama Staff" style="padding-left: 16px;">
+                <select id="stf-posisi" class="form-input" style="padding-left: 16px;">
+                    <option value="Dokter Spesialis">Dokter Spesialis</option>
+                    <option value="Dokter Umum">Dokter Umum</option>
+                    <option value="Perawat/EMS">Perawat/EMS</option>
+                </select>
+                <select id="stf-status" class="form-input" style="padding-left: 16px;">
+                    <option value="AKTIF">AKTIF</option>
+                    <option value="NON-AKTIF">NON-AKTIF</option>
+                </select>
+                <button onclick="saveStaff()" class="btn-primary w-full">Simpan Data</button>
+                <button onclick="toggleModal('staff-modal')" class="w-full text-slate-400 font-bold uppercase text-[10px] mt-4">Batal</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="withdraw-modal" class="hidden fixed inset-0 bg-slate-900/90 z-[100] flex items-center justify-center p-6">
+        <div class="bg-white p-10 rounded-[2.5rem] w-full max-w-sm text-center">
+            <h3 id="withdraw-title" class="font-[900] text-2xl mb-8 text-emerald-950">Tarik Dana</h3>
+            <input type="hidden" id="withdraw-target">
+            <input type="number" id="withdraw-amount" placeholder="Nominal Rp" class="form-input mb-4" style="padding-left: 16px;">
+            <button onclick="executeWithdraw()" class="btn-primary w-full">Konfirmasi</button>
+            <button onclick="toggleModal('withdraw-modal')" class="mt-4 text-xs font-bold text-slate-400 uppercase">Batal</button>
+        </div>
+    </div>
+
+    <!-- FIREBASE & LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBSXaTMP0bc0g-09UwXqvgZQ-Z12seGxwc",
+            authDomain: "rumah-sehat-sdp.firebaseapp.com",
+            databaseURL: "https://rumah-sehat-sdp-default-rtdb.asia-southeast1.firebasedatabase.app/",
+            projectId: "rumah-sehat-sdp",
+            storageBucket: "rumah-sehat-sdp.firebasestorage.app",
+            messagingSenderId: "866717191933",
+            appId: "1:866717191933:web:93103a1f2d836314963894"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const dbRef = ref(db, 'rss_db');
+
+        let state = {
+            isVacancyOpen: true,
+            balances: { opr: 0, pro: 0, tax: 0 },
+            staff: [],
+            applicants: [],
+            logs: []
+        };
+
+        function sync() { set(dbRef, state); }
+
+        onValue(dbRef, (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                state = data;
+                if (!state.staff) state.staff = [];
+                if (!state.applicants) state.applicants = [];
+                if (!state.logs) state.logs = [];
+                updateUI();
+            } else { sync(); }
+        });
+
+        window.toggleModal = (id) => document.getElementById(id).classList.toggle('hidden');
+
+        window.showSection = (id, el) => {
+            document.querySelectorAll('.content-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(n => n.classList.remove('active'));
+            document.getElementById(id).classList.add('active'); 
+            el.classList.add('active');
+        };
+
+        window.updateUI = function() {
+            const total = (state.balances?.opr || 0) + (state.balances?.pro || 0) + (state.balances?.tax || 0);
+            document.getElementById('dash-total').innerText = `Rp ${Math.floor(total).toLocaleString('id-ID')}`;
+            document.getElementById('dash-staff').innerText = state.staff.filter(s => s.status === "AKTIF").length;
+            document.getElementById('dash-inv').innerText = state.logs.filter(l => l.amount > 0).length;
+            
+            const dashV = document.getElementById('dash-vacancy');
+            dashV.innerText = state.isVacancyOpen ? "OPEN" : "CLOSED";
+            dashV.className = state.isVacancyOpen ? "text-2xl font-[900] text-emerald-600" : "text-2xl font-[900] text-red-500";
+
+            document.getElementById('acc-opr').innerText = `Rp ${Math.floor(state.balances.opr).toLocaleString('id-ID')}`;
+            document.getElementById('acc-pro').innerText = `Rp ${Math.floor(state.balances.pro).toLocaleString('id-ID')}`;
+            document.getElementById('acc-tax').innerText = `Rp ${Math.floor(state.balances.tax).toLocaleString('id-ID')}`;
+
+            const btnV = document.getElementById('btn-toggle-vacancy');
+            btnV.innerText = state.isVacancyOpen ? "TUTUP REKRUTMEN" : "BUKA REKRUTMEN";
+            btnV.className = state.isVacancyOpen ? "w-full py-4 bg-red-600 rounded-2xl font-black text-white" : "w-full py-4 bg-emerald-600 rounded-2xl font-black text-white";
+
+            renderStaff();
+            renderLogs();
+            renderLanding();
+            renderApplicants();
+            renderLeaderboard();
+            
+            const badge = document.getElementById('badge-app');
+            if(state.applicants.length > 0) {
+                badge.innerText = state.applicants.length;
+                badge.classList.remove('hidden');
+            } else badge.classList.add('hidden');
+
+            const sSelect = document.getElementById('inv-staff');
+            if(sSelect) sSelect.innerHTML = state.staff.filter(s => s.status === "AKTIF").map(s => `<option value="${s.id}">${s.nama}</option>`).join('');
+        };
+
+        // Fungsi split dana universal (Bisa dipake untuk Tagihan atau Donasi)
+        function calculateSplit(amt) {
+            return {
+                opr: amt * 0.55,
+                pro: amt * 0.40,
+                tax: amt * 0.05
+            };
+        }
+
+        window.processInvoice = function() {
+            const staffId = parseInt(document.getElementById('inv-staff').value);
+            const amt = parseInt(document.getElementById('inv-amount').value);
+            if(!amt || amt <= 0) return alert("Nominal tidak valid!");
+
+            const split = calculateSplit(amt);
+            state.balances.opr += split.opr;
+            state.balances.pro += split.pro;
+            state.balances.tax += split.tax;
+
+            const sIdx = state.staff.findIndex(s => s.id === staffId);
+            if(sIdx !== -1) state.staff[sIdx].points += 1;
+
+            state.logs.unshift({
+                id: Date.now(),
+                time: new Date().toLocaleTimeString('id-ID'),
+                desc: `Tagihan: ${state.staff[sIdx].nama}`,
+                amount: amt,
+                split: split
+            });
+
+            document.getElementById('inv-amount').value = "";
+            sync();
+        };
+
+        window.processManualEntry = function() {
+            const desc = document.getElementById('manual-desc').value;
+            const amt = parseInt(document.getElementById('manual-amount').value);
+            if(!desc || !amt || amt <= 0) return alert("Data tidak valid!");
+
+            const split = calculateSplit(amt);
+            state.balances.opr += split.opr;
+            state.balances.pro += split.pro;
+            state.balances.tax += split.tax;
+
+            state.logs.unshift({
+                id: Date.now(),
+                time: new Date().toLocaleTimeString('id-ID'),
+                desc: `Manual: ${desc}`,
+                amount: amt,
+                split: split
+            });
+            
+            document.getElementById('manual-desc').value = "";
+            document.getElementById('manual-amount').value = "";
+            sync();
+        };
+
+        window.resetFinances = function() {
+            if(confirm("PERINGATAN: Ini akan menghapus SEMUA Saldo dan Log Transaksi. Data Karyawan akan tetap aman. Lanjutkan?")) {
+                state.balances = { opr: 0, pro: 0, tax: 0 };
+                state.logs = [];
+                // Poin karyawan opsional, di sini saya biarkan tetap ada agar tidak merusak reputasi mereka.
+                sync();
+            }
+        };
+
+        window.promptWithdraw = function(target) {
+            document.getElementById('withdraw-target').value = target;
+            document.getElementById('withdraw-title').innerText = `Tarik Buku ${target.toUpperCase()}`;
+            toggleModal('withdraw-modal');
+        };
+
+        window.executeWithdraw = function() {
+            const target = document.getElementById('withdraw-target').value;
+            const amt = parseInt(document.getElementById('withdraw-amount').value);
+            if(!amt || amt <= 0) return;
+            if(amt > state.balances[target]) return alert("Saldo tidak cukup!");
+
+            state.balances[target] -= amt;
+            state.logs.unshift({
+                id: Date.now(),
+                time: new Date().toLocaleTimeString('id-ID'),
+                desc: `Penarikan ${target.toUpperCase()}`,
+                amount: -amt
+            });
+            sync();
+            toggleModal('withdraw-modal');
+        };
+
+        window.saveStaff = function() {
+            const idx = parseInt(document.getElementById('edit-index').value);
+            const nama = document.getElementById('stf-nama').value;
+            const posisi = document.getElementById('stf-posisi').value;
+            const status = document.getElementById('stf-status').value;
+
+            if(idx === -1) {
+                state.staff.push({ id: Date.now(), nama, posisi, points: 0, status });
+            } else {
+                state.staff[idx] = { ...state.staff[idx], nama, posisi, status };
+            }
+            sync();
+            toggleModal('staff-modal');
+        };
+
+        window.openStaffModal = function() {
+            document.getElementById('edit-index').value = -1;
+            document.getElementById('stf-nama').value = "";
+            toggleModal('staff-modal');
+        };
+
+        window.editStaff = function(i) {
+            document.getElementById('edit-index').value = i;
+            document.getElementById('stf-nama').value = state.staff[i].nama;
+            document.getElementById('stf-posisi').value = state.staff[i].posisi;
+            document.getElementById('stf-status').value = state.staff[i].status;
+            toggleModal('staff-modal');
+        };
+
+        window.deleteLog = function(id) {
+            if(!confirm("Hapus log? Saldo akan ditarik kembali.")) return;
+            const idx = state.logs.findIndex(l => l.id === id);
+            const log = state.logs[idx];
+            
+            if(log.amount > 0 && log.split) {
+                state.balances.opr -= log.split.opr;
+                state.balances.pro -= log.split.pro;
+                state.balances.tax -= log.split.tax;
+            } else if (log.amount < 0) {
+                const target = log.desc.toLowerCase().includes('opr') ? 'opr' : log.desc.toLowerCase().includes('pro') ? 'pro' : 'tax';
+                state.balances[target] += Math.abs(log.amount);
+            }
+            state.logs.splice(idx, 1);
+            sync();
+        };
+
+        window.toggleVacancy = () => { state.isVacancyOpen = !state.isVacancyOpen; sync(); };
+
+        function renderStaff() {
+            document.getElementById('staff-table-body').innerHTML = state.staff.map((s, i) => `
+                <tr class="border-b">
+                    <td class="p-6 font-black text-emerald-950">${s.nama}<br><span class="text-[9px] text-slate-400 uppercase">${s.posisi}</span></td>
+                    <td class="p-6 text-center"><span class="bg-amber-100 text-amber-700 px-4 py-1 rounded-full text-xs font-black">${s.points}</span></td>
+                    <td class="p-6 text-[10px] font-black ${s.status === 'AKTIF' ? 'text-emerald-500' : 'text-red-400'}">${s.status}</td>
+                    <td class="p-6 text-right">
+                        <button onclick="editStaff(${i})" class="text-blue-500 mr-4"><i class="fas fa-edit"></i></button>
+                    </td>
+                </tr>`).join('');
+        }
+
+        function renderLogs() {
+            document.getElementById('log-table-body').innerHTML = state.logs.map(l => `
+                <tr class="border-b hover:bg-slate-50 transition">
+                    <td class="p-6 text-[11px] text-slate-400">${l.time}</td>
+                    <td class="p-6 font-bold uppercase text-emerald-950 text-xs">${l.desc}</td>
+                    <td class="p-6 font-black ${l.amount < 0 ? 'text-red-500' : 'text-emerald-600'}">Rp ${Math.abs(l.amount).toLocaleString('id-ID')}</td>
+                    <td class="p-6 text-center"><button onclick="deleteLog(${l.id})" class="text-slate-300 hover:text-red-500"><i class="fas fa-trash"></i></button></td>
+                </tr>`).join('');
+            
+            document.getElementById('short-logs').innerHTML = state.logs.slice(0, 5).map(l => `
+                <div class="flex justify-between text-xs border-b pb-2">
+                    <span class="font-bold text-slate-600">${l.desc.split(':')[0]}</span>
+                    <span class="font-black ${l.amount < 0 ? 'text-red-500' : 'text-emerald-600'}">${l.amount < 0 ? '-' : '+'} ${Math.abs(l.amount/1000)}k</span>
+                </div>`).join('');
+        }
+
+        function renderLanding() {
+            const container = document.getElementById('vacancy-container');
+            const closedMsg = document.getElementById('vacancy-closed');
+            const jobs = [
+                { pos: "Dokter Spesialis", desc: "Menangani operasi berat dan diagnosa medis kompleks." },
+                { pos: "Dokter Umum", desc: "Pusat pelayanan utama pasien dan pemeriksaan harian." },
+                { pos: "Perawat/EMS", desc: "Garda terdepan penanganan kecelakaan dan gawat darurat." }
+            ];
+
+            if (state.isVacancyOpen) {
+                container.classList.remove('hidden'); 
+                closedMsg.classList.add('hidden');
+                container.innerHTML = jobs.map(j => `
+                    <div class="card-premium p-10 text-center hover:scale-105 transition">
+                        <div class="w-16 h-16 bg-emerald-50 text-emerald-900 rounded-2xl flex items-center justify-center text-2xl mx-auto mb-6"><i class="fas fa-briefcase"></i></div>
+                        <h3 class="text-2xl font-[900] mb-4 uppercase text-emerald-950 italic">${j.pos}</h3>
+                        <p class="text-sm text-slate-400 mb-8 font-medium">${j.desc}</p>
+                        <button onclick="toggleModal('apply-modal')" class="bg-emerald-600 text-white px-6 py-3 rounded-xl font-black text-xs uppercase">Lamar Sekarang</button>
+                    </div>`).join('');
+            } else { 
+                container.classList.add('hidden'); 
+                closedMsg.classList.remove('hidden'); 
+            }
+        }
+
+        function renderApplicants() {
+            document.getElementById('applicant-list').innerHTML = state.applicants.map((a, i) => `
+                <div class="p-6 bg-white rounded-2xl border-l-8 border-emerald-600 shadow-sm flex justify-between items-center">
+                    <div>
+                        <h4 class="font-black text-emerald-950 uppercase">${a.nama}</h4>
+                        <p class="text-[10px] font-bold text-amber-600 uppercase">${a.posisi} | ${a.discord}</p>
+                        <p class="text-xs italic text-slate-400 mt-2">"${a.alasan}"</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="acceptApp(${i})" class="bg-emerald-500 text-white p-3 rounded-xl"><i class="fas fa-check"></i></button>
+                        <button onclick="rejectApp(${i})" class="bg-red-500 text-white p-3 rounded-xl"><i class="fas fa-times"></i></button>
+                    </div>
+                </div>`).join('');
+        }
+
+        window.acceptApp = (i) => {
+            const p = state.applicants[i];
+            state.staff.push({ id: Date.now(), nama: p.nama, posisi: p.posisi, points: 0, status: "AKTIF" });
+            state.applicants.splice(i, 1);
+            sync();
+        };
+
+        window.rejectApp = (i) => { if(confirm("Tolak lamaran ini?")) { state.applicants.splice(i, 1); sync(); } };
+
+        function renderLeaderboard() {
+            const top = [...state.staff].sort((a,b) => b.points - a.points).slice(0, 3);
+            document.getElementById('leaderboard-list').innerHTML = top.map((s, i) => `
+                <div class="flex items-center justify-between p-4 rounded-2xl bg-slate-50 border border-slate-100">
+                    <div class="flex items-center gap-4">
+                        <span class="w-8 h-8 flex items-center justify-center bg-emerald-950 text-white rounded-full font-black text-xs">#${i+1}</span>
+                        <p class="font-bold text-emerald-950 text-sm">${s.nama}</p>
+                    </div>
+                    <span class="font-black text-emerald-700">${s.points} PTS</span>
+                </div>`).join('');
+        }
+
+        document.getElementById('form-pendaftaran').onsubmit = function(e) {
+            e.preventDefault();
+            state.applicants.push({
+                nama: document.getElementById('app-nama').value,
+                discord: document.getElementById('app-discord').value,
+                posisi: document.getElementById('app-posisi').value,
+                alasan: document.getElementById('app-alasan').value
+            });
+            sync();
+            toggleModal('apply-modal');
+            alert("Lamaran terkirim!");
+        };
+
+        window.handleLogin = function() {
+            if(document.getElementById('log-pass').value === '123') {
+                document.getElementById('landing-page').classList.add('hidden');
+                document.getElementById('login-modal').classList.add('hidden');
+                document.getElementById('admin-panel').classList.remove('hidden');
+            } else { alert("Password Salah!"); }
+        };
+    </script>
+</body>
+</html>
