@@ -359,7 +359,7 @@
         </main>
     </div>
 
-   <!-- LOGIN MODAL (MODEL LAMA) -->
+   <!-- LOGIN MODAL -->
     <div id="login-modal" class="hidden fixed inset-0 bg-black/80 z-[100] flex items-center justify-center p-4">
         <div class="bg-white p-8 rounded-lg w-full max-w-sm shadow-2xl">
             <div class="text-center mb-6">
@@ -388,6 +388,7 @@
         </div>
     </div>
 
+    <!-- APPLY MODAL -->
     <div id="apply-modal" class="hidden fixed inset-0 bg-emerald-950/95 z-[100] flex items-center justify-center p-6 backdrop-blur-xl">
         <div class="bg-white rounded-[3rem] w-full max-w-4xl flex flex-col md:flex-row overflow-hidden shadow-2xl">
             <div class="md:w-1/3 bg-emerald-900 p-12 text-white">
@@ -421,6 +422,7 @@
         </div>
     </div>
 
+    <!-- STAFF MODAL -->
     <div id="staff-modal" class="hidden fixed inset-0 bg-slate-900/90 z-[100] flex items-center justify-center p-6">
         <div class="bg-white p-10 rounded-[2.5rem] w-full max-w-md">
             <h3 id="staff-modal-title" class="font-[900] text-xl mb-8 uppercase text-emerald-950">Data Staff</h3>
@@ -442,6 +444,7 @@
         </div>
     </div>
 
+    <!-- WITHDRAW MODAL -->
     <div id="withdraw-modal" class="hidden fixed inset-0 bg-slate-900/90 z-[100] flex items-center justify-center p-6">
         <div class="bg-white p-10 rounded-[2.5rem] w-full max-w-sm text-center">
             <h3 id="withdraw-title" class="font-[900] text-2xl mb-8 text-emerald-950">Tarik Dana</h3>
@@ -535,13 +538,8 @@
             if(sSelect) sSelect.innerHTML = state.staff.filter(s => s.status === "AKTIF").map(s => `<option value="${s.id}">${s.nama}</option>`).join('');
         };
 
-        // Fungsi split dana universal (Bisa dipake untuk Tagihan atau Donasi)
         function calculateSplit(amt) {
-            return {
-                opr: amt * 0.55,
-                pro: amt * 0.40,
-                tax: amt * 0.05
-            };
+            return { opr: amt * 0.55, pro: amt * 0.40, tax: amt * 0.05 };
         }
 
         window.processInvoice = function() {
@@ -593,10 +591,9 @@
         };
 
         window.resetFinances = function() {
-            if(confirm("PERINGATAN: Ini akan menghapus SEMUA Saldo dan Log Transaksi. Data Karyawan akan tetap aman. Lanjutkan?")) {
+            if(confirm("Hapus SEMUA Saldo dan Log Transaksi?")) {
                 state.balances = { opr: 0, pro: 0, tax: 0 };
                 state.logs = [];
-                // Poin karyawan opsional, di sini saya biarkan tetap ada agar tidak merusak reputasi mereka.
                 sync();
             }
         };
@@ -653,6 +650,15 @@
             toggleModal('staff-modal');
         };
 
+        // FITUR HAPUS KARYAWAN
+        window.deleteStaff = function(i) {
+            const nama = state.staff[i].nama;
+            if(confirm(`Apakah Anda yakin ingin menghapus "${nama}" dari database selamanya? Tindakan ini tidak bisa dibatalkan.`)) {
+                state.staff.splice(i, 1);
+                sync();
+            }
+        };
+
         window.deleteLog = function(id) {
             if(!confirm("Hapus log? Saldo akan ditarik kembali.")) return;
             const idx = state.logs.findIndex(l => l.id === id);
@@ -679,7 +685,8 @@
                     <td class="p-6 text-center"><span class="bg-amber-100 text-amber-700 px-4 py-1 rounded-full text-xs font-black">${s.points}</span></td>
                     <td class="p-6 text-[10px] font-black ${s.status === 'AKTIF' ? 'text-emerald-500' : 'text-red-400'}">${s.status}</td>
                     <td class="p-6 text-right">
-                        <button onclick="editStaff(${i})" class="text-blue-500 mr-4"><i class="fas fa-edit"></i></button>
+                        <button onclick="editStaff(${i})" class="text-blue-500 mr-4 hover:scale-110 transition"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteStaff(${i})" class="text-red-500 hover:scale-110 transition"><i class="fas fa-trash"></i></button>
                     </td>
                 </tr>`).join('');
         }
